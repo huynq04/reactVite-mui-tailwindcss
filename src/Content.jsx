@@ -1,21 +1,24 @@
 import { useEffect, useState } from 'react';
 
 function Content() {
-    const [countdown, setCountdown] = useState(180);
+    const [avatar, setAvatar] = useState();
 
     useEffect(() => {
-        const timer = setInterval(() => {
-            setCountdown((prev) => prev - 1);
-            console.log('render');
-        }, 1000);
+        return () => avatar && URL.revokeObjectURL(avatar.preview);
+    }, [avatar]);
 
-        // cleanup function
-        return () => clearInterval(timer);
-    }, []);
+    const handleFile = (e) => {
+        const file = e.target.files[0];
+
+        file.preview = URL.createObjectURL(file);
+
+        setAvatar(file);
+    };
 
     return (
         <div>
-            <h1>{countdown}</h1>
+            <input type="file" onChange={handleFile} />
+            {avatar && <img src={avatar.preview} alt="" width="80%" />}
         </div>
     );
 }
