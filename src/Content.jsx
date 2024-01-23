@@ -1,24 +1,46 @@
 import { useEffect, useState } from 'react';
 
+const lessons = [
+    {
+        id: 1,
+        title: 'Lesson 1',
+    },
+    {
+        id: 2,
+        title: 'Lesson 2',
+    },
+    {
+        id: 3,
+        title: 'Lesson 3',
+    },
+];
+
 function Content() {
-    const [avatar, setAvatar] = useState();
+    const [lessonId, setLessonId] = useState(1);
 
     useEffect(() => {
-        return () => avatar && URL.revokeObjectURL(avatar.preview);
-    }, [avatar]);
+        const handleComment = ({ detail }) => {
+            console.log(detail);
+        };
 
-    const handleFile = (e) => {
-        const file = e.target.files[0];
+        window.addEventListener(`lesson-${lessonId}`, handleComment);
 
-        file.preview = URL.createObjectURL(file);
-
-        setAvatar(file);
-    };
+        return () => {
+            window.removeEventListener(`lesson-${lessonId}`, handleComment);
+        };
+    }, [lessonId]);
 
     return (
-        <div>
-            <input type="file" onChange={handleFile} />
-            {avatar && <img src={avatar.preview} alt="" width="80%" />}
+        <div style={{ marginTop: 20 }}>
+            {lessons.map((lesson) => (
+                <li
+                    style={{ marginTop: 10, color: lessonId === lesson.id ? 'red' : '#333' }}
+                    key={lesson.id}
+                    onClick={() => setLessonId(lesson.id)}
+                >
+                    {lesson.title}
+                </li>
+            ))}
         </div>
     );
 }
