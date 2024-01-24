@@ -64,3 +64,7 @@ function App() {
 ## memo and useCallback()
 
 -   Nếu muốn dùng useCallback() ở component cha thì phải dùng 'memo()' ở component con
+
+## useMemo()
+
+-   Để tránh thực hiện lại 1 logic không cần thiết trong function component
