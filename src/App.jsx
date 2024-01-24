@@ -8,6 +8,7 @@ function App() {
     const handleCount = useCallback(() => {
         setCount((prev) => prev + 1)
     }, [])
+    // deps []: tham chieu vao callback truoc do da return ra
 
     return (
         <div className="App">

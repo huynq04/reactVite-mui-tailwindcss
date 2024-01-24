@@ -1,4 +1,4 @@
-# Todo List with useState
+## Todo List with useState
 
 ```
 function App() {
@@ -60,3 +60,7 @@ function App() {
 }
 
 ```
+
+## memo and useCallback()
+
+-   Nếu muốn dùng useCallback() ở component cha thì phải dùng 'memo()' ở component con
