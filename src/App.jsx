@@ -1,16 +1,20 @@
-import { useState } from 'react';
-import Content from './content';
-import './App.css';
+import { useState, useCallback } from 'react'
+import Content from './content'
+import './App.css'
 
 function App() {
-    const [show, setShow] = useState(false);
+    const [count, setCount] = useState(0)
+
+    const handleCount = useCallback(() => {
+        setCount((prev) => prev + 1)
+    }, [])
 
     return (
         <div className="App">
-            <button onClick={() => setShow(!show)}>toggle</button>
-            {show && <Content />}
+            <Content onIncrease={handleCount} />
+            <h1>{count}</h1>
         </div>
-    );
+    )
 }
 
-export default App;
+export default App
