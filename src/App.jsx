@@ -1,15 +1,13 @@
-import Content from './content'
+import Content from './components/Context/Content'
+import Paragraph from './components/Paragraph/Paragraph'
+
 import './App.css'
-import { ThemeContext } from './ThemeContext'
-import { useContext } from 'react'
 
 function App() {
-    const { toggleTheme } = useContext(ThemeContext)
-
     return (
         <div>
-            <button onClick={toggleTheme}>toggle Theme</button>
             <Content />
+            <Paragraph />
         </div>
     )
 }
