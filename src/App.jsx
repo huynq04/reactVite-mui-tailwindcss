@@ -1,60 +1,35 @@
-import { useState, useCallback, useMemo, useRef } from 'react'
+import { useState, useCallback, useMemo, useRef, useEffect, useReducer } from 'react'
 import Content from './content'
 import './App.css'
 
-function App() {
-    const [name, setName] = useState('')
-    const [price, setPrice] = useState('')
-    const [products, setProducts] = useState([])
+// init state
+const initState = 0
 
-    const nameRef = useRef()
+// action
+const UP_ACTION = 'up'
+const DOWN_ACTION = 'down'
 
-    const handleAdd = () => {
-        setProducts([...products, { name, price: Number(price) }])
-
-        setName('')
-        setPrice('')
-
-        nameRef.current.focus() // focus vào ô input name
+// reducer function
+const reducer = (state, action) => {
+    switch (action) {
+        case UP_ACTION:
+            return state + 1
+        case DOWN_ACTION:
+            return state - 1
+        default:
+            throw new Error('Unexpected action')
     }
+}
 
-    // useMemo: dùng để tính toán giá trị trả về, nếu giá trị dependencies không thay đổi thì không tính toán lại
-    const total = useMemo(() => {
-        const total = products.reduce((result, product) => {
-            return result + product.price
-        }, 0)
-
-        return total
-    }, [products]) // khi products thay đổi thì mới tính lại total
+function App() {
+    const [count, dispatch] = useReducer(reducer, initState)
+    // useReducer co the co 3 tham so, tham so thu 3 la init state
 
     return (
-        <div className="App">
-            <label>
-                Name:
-                <input
-                    ref={nameRef}
-                    type="text"
-                    placeholder="enter name"
-                    value={name}
-                    onChange={(e) => setName(e.target.value)}
-                />
-            </label>
-            <br />
-            <label>
-                Price:
-                <input type="text" placeholder="enter price" value={price} onChange={(e) => setPrice(e.target.value)} />
-            </label>
-            <br />
-            <button onClick={handleAdd}>Add</button>
-            <br />
-            Total: {total}
-            <ul>
-                {products.map((product, index) => (
-                    <li key={index}>
-                        {product.name} - {product.price}
-                    </li>
-                ))}
-            </ul>
+        <div>
+            <h1>{count}</h1>
+            <button onClick={() => dispatch(UP_ACTION)}>Up</button>
+            <button onClick={() => dispatch(DOWN_ACTION)}> Down</button>
         </div>
     )
 }
