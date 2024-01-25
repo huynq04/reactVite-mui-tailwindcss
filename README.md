@@ -161,3 +161,7 @@ function App() {
 }
 
 ```
+
+## createContext & useContext()
+
+-   Dùng để share data giữa các component mà không cần dùng props và component trung gian
